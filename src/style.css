@@ -7,3 +7,69 @@
   font-family: "Roboto", sans-serif;
 }
 
+#content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#cardsContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+#controlsContainer{
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#controlsContainer > button{
+  background:none;
+  border: none;
+}
+
+[type=checkbox]{
+  -webkit-appearance: none;
+  border: 1px solid hsl(0, 0%, 0%);
+  height: 1rem;
+  width: 1rem;
+  background: none;
+  border-radius: 50%;
+}
+
+[type=checkbox]:checked{
+  background: hsl(0, 0%, 73%);
+}
+
+.card{
+  display:none;
+  animation: fadeOut 1s;
+}
+
+.shown{
+  display: block;
+  animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
