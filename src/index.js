@@ -1,5 +1,37 @@
 import './style.css';
 
+function range(start, end) {
+  return Array.apply(0, Array(end - 1))
+    .map((element, index) => index + start);
+}
+/*
+Under normal circumstance, the imageUrls would be the actual urls to images instead of
+placeholder images
+*/
+const imageUrls = range(1, 11).map((number) => `http://placekitten.com/500/500?image=${number}`);
+
+const cardsPlaceholder = document.createDocumentFragment();
+const dotsPlaceholder = document.createDocumentFragment();
+
+function makeImage(element, index) {
+  const imageCard = document.createElement('div');
+  imageCard.id = `img-${index + 1}`;
+  imageCard.classList.add('card');
+  if (index === 0) { imageCard.classList.add('shown'); }
+  imageCard.appendChild(document.createElement('img'));
+  imageCard.lastChild.setAttribute('src', element);
+  cardsPlaceholder.appendChild(imageCard);
+  dotsPlaceholder.appendChild(document.createElement('input'));
+  dotsPlaceholder.lastChild.setAttribute('type', 'checkbox');
+  dotsPlaceholder.lastChild.id = `imgHint-${index + 1}`;
+  if (index === 0) { dotsPlaceholder.lastChild.checked = true; }
+}
+
+imageUrls.forEach(makeImage);
+
+document.getElementById('photoDots').appendChild(dotsPlaceholder);
+document.getElementById('cardsContainer').appendChild(cardsPlaceholder);
+
 const previousButton = document.getElementById('previous');
 const nextButton = document.getElementById('next');
 const checkboxes = document.getElementById('photoDots');
@@ -9,7 +41,7 @@ function previousImage() {
   const currentImageDiv = document.querySelector('.shown');
   const currentImageId = Number(currentImageDiv.id.split('-')[1]);
   const previousImageIdNumber = currentImageId === 1
-    ? 10
+    ? imageUrls.length
     : currentImageId - 1;
   const previousImageDiv = document.getElementById(`img-${previousImageIdNumber}`);
   const currentImageCheckbox = document.getElementById(`imgHint-${currentImageId}`);
@@ -25,7 +57,7 @@ previousButton.addEventListener('click', previousImage);
 function nextImage() {
   const currentImageDiv = document.querySelector('.shown');
   const currentImageId = Number(currentImageDiv.id.split('-')[1]);
-  const nextImageIdNumber = currentImageId === 10
+  const nextImageIdNumber = currentImageId === imageUrls.length
     ? 1
     : currentImageId + 1;
   const nextImageDiv = document.getElementById(`img-${nextImageIdNumber}`);
